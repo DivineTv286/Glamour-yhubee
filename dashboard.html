@@ -240,6 +240,7 @@
             displayElement.textContent = savedFullName || savedUsername;
         }
     }
+    
 
     function initEarningsCard() {
         // Progress Bar
@@ -286,6 +287,42 @@
         if (result.isConfirmed) {
             window.location.href = 'activate.html';
         }
+    });
+});
+    // Target all items inside the grid-container
+document.querySelectorAll('.grid-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent page refresh
+        
+        const featureName = this.querySelector('span').innerText;
+        const iconClass = this.querySelector('i').className;
+
+        Swal.fire({
+            title: `<span style="color: #dbb445;">${featureName}</span>`,
+            html: `Would you like to access the <b>${featureName}</b> module? <br> <small style="color: #888;">Premium subscription required.</small>`,
+            iconHtml: `<i class="${iconClass}" style="color: #dbb445;"></i>`,
+            showCancelButton: true,
+            confirmButtonColor: '#dbb445',
+            cancelButtonColor: '#333',
+            confirmButtonText: 'Enter Now',
+            background: '#0a0a0a',
+            color: '#fff',
+            customClass: {
+                popup: 'border-gold'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Here you can redirect them or show an "Access Denied" message
+                Swal.fire({
+                    title: 'Access Denied',
+                    text: 'Please activate your account to use this feature.',
+                    icon: 'error',
+                    confirmButtonColor: '#dbb445',
+                    background: '#0a0a0a',
+                    color: '#fff'
+                });
+            }
+        });
     });
 });
 
